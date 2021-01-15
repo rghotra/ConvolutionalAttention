@@ -1,0 +1,9 @@
+Query_ID	Target_ID	Optimal_offset	p-value	E-value	q-value	Overlap	Query_consensus	Target_consensus	Orientation
+test-motif	MA1284.1	0	1.9295e-06	0.00317595	0.00370438	20	TCATGCCCATCTGAGGTCAC	ATAGGCCCAAGAGAGGAGGTGGGGCCCACA	-
+test-motif	MA0615.1	0	2.2708e-06	0.00373774	0.00370438	17	TCATGCCCATCTGAGGTCAC	GAGTGTACGTAAGATGG	+
+test-motif	MA1359.1	1	1.35139e-05	0.0222438	0.0110227	20	TCATGCCCATCTGAGGTCAC	GTGAATGCCACGTGCCACCTC	-
+test-motif	MA0585.1	-2	4.1481e-05	0.0682778	0.0270674	18	TCATGCCCATCTGAGGTCAC	ATTGCCAAATTGGGTAAG	+
+
+# Tomtom (Motif Comparison Tool): Version 5.3.0 compiled on Jan 12 2021 at 18:57:30
+# The format of this file is described at http://meme-suite.org/doc/tomtom-output-format.html.
+# tomtom -evalue -thresh 0.1 -o ./results/filter-8 ./motifs/model-test/filter-8.txt ./motifs/motif_database.meme
