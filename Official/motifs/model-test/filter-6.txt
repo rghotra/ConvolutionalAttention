@@ -8,7 +8,8 @@ Background letter frequencies
 A 0.25 C 0.25 G 0.25 T 0.25
 
 MOTIF filter-6
-letter-probability matrix: alength= 4 w= 10
+letter-probability matrix: alength= 4 w= 11
+0.2440 0.2311 0.2772 0.2476
 0.2247 0.1676 0.4515 0.1562
 0.2459 0.0484 0.5300 0.1757
 0.2899 0.1097 0.5694 0.0310
