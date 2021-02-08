@@ -1,12 +1,25 @@
 #!/bin/bash
 
-model_name=$1
-
 direc="./motifs"
 
-mkdir -p -- "./results/${model_name}"
+if [ -d "./results" ]
+then
+    rm -r "./results"
+fi
 
-for motif_num in {1..32}
+for param in ${direc}/*/
 do
-    tomtom -evalue -thresh 0.1 -o "./results/${model_name}/filter-${motif_num}" "$direc/${model_name}/filter-${motif_num}.txt" "$direc/motif_database.meme"
+    for model in ${param}*
+    do
+	direcs=(${model//// })
+	name=${direcs[-1]}
+	name=(${name//./ })
+	name=${name[0]}
+  	category=${direcs[-2]}
+
+	out=./results/${category}/${name}
+
+	mkdir -p -- "${out}"
+    	tomtom -evalue -thresh 0.1 -o "${out}" "${model}" "${direc}/motif_database.meme"
+    done
 done
