@@ -17,9 +17,9 @@ do
 	name=${name[0]}
   	category=${direcs[-2]}
 
-	out=./results/${category}/${name}
+	out=./results/${category}
 
 	mkdir -p -- "${out}"
-    	tomtom -evalue -thresh 0.1 -o "${out}" "${model}" "${direc}/motif_database.meme"
+    	tomtom -evalue -thresh 0.1 -o "${out}/${name}" "${model}" "${direc}/motif_database.meme"
     done
 done
