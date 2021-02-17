@@ -20,6 +20,6 @@ do
 	out=./results/${category}
 
 	mkdir -p -- "${out}"
-    	tomtom -evalue -thresh 0.1 -o "${out}/${name}" "${model}" "${direc}/motif_database.meme"
+    	tomtom -evalue -thresh 0.1 -o "${out}/${name}" "${model}" "./motif_database.meme"
     done
 done
