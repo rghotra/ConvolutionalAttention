@@ -7,6 +7,7 @@ import numpy as np
 import requests as rq
 import os, io, h5py
 
+from bigbird.core import modeling
 from tfomics import moana, evaluate
 from tfomics.layers import MultiHeadAttention
 
