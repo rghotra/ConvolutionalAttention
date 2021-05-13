@@ -15,10 +15,10 @@ import utils
 def execute_pipeline(baseline, category, variant, trial, model, epochs):
 
     # Create directories
-    model_dir = f'{baseline}/models/{category}/{variant}'
-    motif_dir = f'{baseline}/motifs/{category}/{variant}'
-    tomtom_dir = f'{baseline}/tomtom/{category}/{variant}'
-    stats_dir = f'{baseline}/stats/{category}/{variant}'
+    model_dir = f'{baseline}/models/{category}/model-{variant}'
+    motif_dir = f'{baseline}/motifs/{category}/model-{variant}'
+    tomtom_dir = f'{baseline}/tomtom/{category}/model-{variant}'
+    stats_dir = f'{baseline}/stats/{category}/model-{variant}'
 
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
