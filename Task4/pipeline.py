@@ -52,7 +52,7 @@ def execute_pipeline(baseline, category, variant, trial, model, epochs):
 
     lr_decay = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_aupr', factor=0.2, patient=5, verbose=1, min_lr=1e-7, mode='max')
     early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_aupr', patience=15, verbose=1, mode='max')
-    history = model.fit(x_train, y_train, epochs=epochs, validation_data=(x_valid, y_valid), callbacks=[lr_decay, early_stop], verbose=1, bach_size=100)
+    history = model.fit(x_train, y_train, epochs=epochs, validation_data=(x_valid, y_valid), callbacks=[lr_decay, early_stop], verbose=1, batch_size=100)
 
     model.save_weights(model_dir)
     
