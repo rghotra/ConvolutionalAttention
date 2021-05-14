@@ -2,4 +2,4 @@ CNN_ATT-pool25_exp/
 CNN_ATT-pool4_exp/
 CNN_ATT-pool4_relu/
 CNN_ATT-pool25_relu/
-CNN_LSTM
+CNN_LSTM/
