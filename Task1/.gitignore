@@ -1,4 +1,5 @@
-pool4_relu/
-pool25_relu/
-pool4_exp/
-pool25_exp/
+CNN_ATT-pool25_exp/
+CNN_ATT-pool4_exp/
+CNN_ATT-pool4_relu/
+CNN_ATT-pool25_relu/
+CNN_LSTM

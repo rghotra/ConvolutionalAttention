@@ -8,17 +8,24 @@ from tfomics.layers import MultiHeadAttention
 import numpy as np
 import requests as rq
 import io, h5py, os
+from six.moves import cPickle
 
 import models
 import utils
 
+# Retrieve dataset
+x_train, y_train, x_valid, y_valid, x_test, y_test = utils.get_synthetic_dataset()
+
 def execute_pipeline(baseline, category, variant, trial, model, epochs):
+    
+    global x_train, y_train, x_valid, y_valid, x_test, y_test
 
     # Create directories
     model_dir = f'{baseline}/models/{category}/model-{variant}'
     motif_dir = f'{baseline}/motifs/{category}/model-{variant}'
     tomtom_dir = f'{baseline}/tomtom/{category}/model-{variant}'
     stats_dir = f'{baseline}/stats/{category}/model-{variant}'
+    logs_dir = f'{baseline}/history/{category}/model-{variant}'
 
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
@@ -28,15 +35,14 @@ def execute_pipeline(baseline, category, variant, trial, model, epochs):
         os.makedirs(tomtom_dir)
     if not os.path.exists(stats_dir):
         os.makedirs(stats_dir)
+    if not os.path.exists(logs_dir):
+        os.makedirs(logs_dir)
 
     model_dir += f'/trial-{trial}/weights'
     motif_dir += f'/trial-{trial}.txt'
     tomtom_dir += f'/trial-{trial}'
     stats_dir += f'/trial-{trial}.npy'
-
-
-    # Retrieve dataset
-    x_train, y_train, x_valid, y_valid, x_test, y_test = utils.get_synthetic_dataset()
+    logs_dir += f'/trial-{trial}.pickle'
 
 
     # Train model
@@ -46,9 +52,12 @@ def execute_pipeline(baseline, category, variant, trial, model, epochs):
 
     lr_decay = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_aupr', factor=0.2, patient=5, verbose=1, min_lr=1e-7, mode='max')
     early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_aupr', patience=15, verbose=1, mode='max')
-    model.fit(x_train, y_train, epochs=epochs, validation_data=(x_valid, y_valid), callbacks=[lr_decay, early_stop], verbose=1)
+    history = model.fit(x_train, y_train, epochs=epochs, validation_data=(x_valid, y_valid), callbacks=[lr_decay, early_stop], verbose=1)
 
     model.save_weights(model_dir)
+    
+    with open(logs_dir, 'wb') as handle:
+        cPickle.dump(history.history, handle)
 
 
     # Extract ppms from filters
