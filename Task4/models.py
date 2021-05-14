@@ -66,7 +66,7 @@ def CNN_LSTM_ATT(in_shape=(200, 4), num_filters=32, batch_norm=True, activation=
 
     forward = layers.LSTM(lstm_units//2, return_sequences=True)
     backward = layers.LSTM(lstm_units//2, activation='relu', return_sequences=True, go_backwards=True)
-    nn = layers.Bidirectional(forward_layer, backward_layer=backward_layer)(nn)
+    nn = layers.Bidirectional(forward, backward_layer=backward)(nn)
     nn = layers.Dropout(0.1)(nn)
     
     nn, w = MultiHeadAttention(num_heads=heads, d_model=key_size)(nn, nn, nn)

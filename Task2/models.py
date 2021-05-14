@@ -38,9 +38,9 @@ def CNN_LSTM(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='rel
     nn = layers.MaxPool1D(pool_size=pool_size)(nn)
     nn = layers.Dropout(0.1)(nn)
 
-    forward = keras.layers.LSTM(lstm_units//2, return_sequences=True)
-    backward = keras.layers.LSTM(lstm_units//2, activation='relu', return_sequences=True, go_backwards=True)
-    nn = keras.layers.Bidirectional(forward_layer, backward_layer=backward_layer)(nn)
+    forward = layers.LSTM(lstm_units//2, return_sequences=True)
+    backward = layers.LSTM(lstm_units//2, activation='relu', return_sequences=True, go_backwards=True)
+    nn = layers.Bidirectional(forward, backward_layer=backward)(nn)
     nn = layers.Dropout(0.1)(nn)
 
     nn = layers.Flatten()(nn)
@@ -64,9 +64,9 @@ def CNN_LSTM_ATT(in_shape=(200, 4), num_filters=32, batch_norm=True, activation=
     nn = layers.MaxPool1D(pool_size=pool_size)(nn)
     nn = layers.Dropout(0.1)(nn)
 
-    forward = keras.layers.LSTM(lstm_units//2, return_sequences=True)
-    backward = keras.layers.LSTM(lstm_units//2, activation='relu', return_sequences=True, go_backwards=True)
-    nn = keras.layers.Bidirectional(forward_layer, backward_layer=backward_layer)(nn)
+    forward = layers.LSTM(lstm_units//2, return_sequences=True)
+    backward = layers.LSTM(lstm_units//2, activation='relu', return_sequences=True, go_backwards=True)
+    nn = layers.Bidirectional(forward, backward_layer=backward)(nn)
     nn = layers.Dropout(0.1)(nn)
     
     nn, w = MultiHeadAttention(num_heads=heads, d_model=key_size)(nn, nn, nn)
