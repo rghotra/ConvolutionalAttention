@@ -9,33 +9,26 @@ import models
 import utils
 
 # Retrieve dataset
-x_train, y_train, x_valid, y_valid, x_test, y_test = utils.get_synthetic_dataset()
+x_train, y_train, x_valid, y_valid, x_test, y_test, model_test = utils.get_synthetic_coded_dataset()
 
-def execute_pipeline(baseline, category, variant, trial, model, epochs=100):
+def execute_pipeline(baseline, category, variant, trial, model, epochs=50):
     
-    global x_train, y_train, x_valid, y_valid, x_test, y_test
+    global x_train, y_train, x_valid, y_valid, x_test, y_test, model_test
 
+    
     # Create directories
     model_dir = f'{baseline}/models/{category}/model-{variant}'
-    motif_dir = f'{baseline}/motifs/{category}/model-{variant}'
-    tomtom_dir = f'{baseline}/tomtom/{category}/model-{variant}'
     stats_dir = f'{baseline}/stats/{category}/model-{variant}'
     logs_dir = f'{baseline}/history/{category}/model-{variant}'
 
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
-    if not os.path.exists(motif_dir):
-        os.makedirs(motif_dir)
-    if not os.path.exists(tomtom_dir):
-        os.makedirs(tomtom_dir)
     if not os.path.exists(stats_dir):
         os.makedirs(stats_dir)
     if not os.path.exists(logs_dir):
         os.makedirs(logs_dir)
 
     model_dir += f'/trial-{trial}/weights'
-    motif_dir += f'/trial-{trial}.txt'
-    tomtom_dir += f'/trial-{trial}'
     stats_dir += f'/trial-{trial}.npy'
     logs_dir += f'/trial-{trial}.pickle'
 
@@ -53,17 +46,9 @@ def execute_pipeline(baseline, category, variant, trial, model, epochs=100):
     
     with open(logs_dir, 'wb') as handle:
         cPickle.dump(history.history, handle)
-
-
-    # Extract ppms from filters
-    ppms = utils.get_ppms(model, x_test)
-    moana.meme_generate(ppms, output_file=motif_dir, prefix='filter')
-
-
-    # Tomtom analysis
-    utils.tomtom(motif_dir, tomtom_dir)
-
-
-    # Analysis
-    stats = utils.analysis(variant, motif_dir, tomtom_dir, model, x_test, y_test)
+        
+        
+    # Obtain saliency scores
+    sal_roc, sal_pr, snr = utils.get_saliency_scores(model, x_test, y_test, model_test)
+    stats = np.array([sal_roc, sal_pr, snr])
     np.save(stats_dir, stats, allow_pickle=True)
