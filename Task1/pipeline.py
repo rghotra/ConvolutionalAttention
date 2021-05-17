@@ -1,6 +1,8 @@
 # Imports
 import tensorflow as tf
 
+from tfomics import moana
+
 import os
 import numpy as np
 from six.moves import cPickle
