@@ -4,6 +4,27 @@ from tensorflow.keras import layers, Model, Input
 from tfomics import moana, evaluate
 from tfomics.layers import MultiHeadAttention
 
+def CNN(in_shape=(200, 4), num_filters=24, batch_norm=True, activation='relu', pool_size=4, dense_units=128, num_out=12):
+
+    inputs = Input(shape=in_shape)
+    nn = layers.Conv1D(filters=num_filters, kernel_size=19, use_bias=False, padding='same')(inputs)
+    if batch_norm:
+        nn = layers.BatchNormalization()(nn)
+    nn = layers.Activation(activation, name='conv_activation')(nn)
+    nn = layers.MaxPool1D(pool_size=pool_size)(nn)
+    nn = layers.Dropout(0.1)(nn)
+
+    nn = layers.Flatten()(nn)
+
+    nn = layers.Dense(dense_units, use_bias=False)(nn)
+    nn = layers.BatchNormalization()(nn)
+    nn = layers.Activation('relu')(nn)
+    nn = layers.Dropout(0.5)(nn)
+
+    outputs = layers.Dense(num_out, activation='sigmoid')(nn)
+
+    return Model(inputs=inputs, outputs=outputs)
+
 def CNN_ATT(in_shape=(200, 4), num_filters=24, batch_norm=True, activation='relu', pool_size=4, heads=8, key_size=64, dense_units=128, num_out=12):
 
     inputs = Input(shape=in_shape)
@@ -93,7 +114,7 @@ def CNN_TRANS(in_shape=(200, 4), num_filters=24, batch_norm=True, activation='re
     nn = layers.MaxPool1D(pool_size=pool_size)(nn)
     nn = layers.Dropout(0.1)(nn)
     
-    nn = layers.Embedding(num_filters, key_size)(nn)
+    nn = layers.Dense(units=key_size, use_bias=False)(nn)
     
     nn = layers.LayerNormalization(epsilon=1e-6)(nn)
     for i in range(num_layers):

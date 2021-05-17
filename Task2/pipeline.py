@@ -11,15 +11,15 @@ import utils
 # Retrieve dataset
 x_train, y_train, x_valid, y_valid, x_test, y_test, model_test = utils.get_synthetic_coded_dataset()
 
-def execute_pipeline(baseline, category, variant, trial, model, epochs=50):
+def execute_pipeline(baseline, category, trial, model, epochs=75):
     
     global x_train, y_train, x_valid, y_valid, x_test, y_test, model_test
 
     
     # Create directories
-    model_dir = f'{baseline}/models/{category}/model-{variant}'
-    stats_dir = f'{baseline}/stats/{category}/model-{variant}'
-    logs_dir = f'{baseline}/history/{category}/model-{variant}'
+    model_dir = f'{baseline}/models/{category}'
+    stats_dir = f'{baseline}/stats/{category}'
+    logs_dir = f'{baseline}/history/{category}'
 
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)

@@ -114,7 +114,7 @@ def CNN_TRANS(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='re
     nn = layers.MaxPool1D(pool_size=pool_size)(nn)
     nn = layers.Dropout(0.1)(nn)
     
-    nn = layers.Embedding(num_filters, key_size)(nn)
+    nn = layers.Dense(units=key_size, use_bias=False)(nn)
     
     nn = layers.LayerNormalization(epsilon=1e-6)(nn)
     for i in range(num_layers):
