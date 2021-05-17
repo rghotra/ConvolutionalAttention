@@ -20,7 +20,7 @@ def get_synthetic_coded_dataset():
 
     return x_train, y_train, x_valid, y_valid, x_test, y_test, model_test
 
-def get_saliency_scores(model, x_test, y_test, model_test, num_analyze=500, threshold=0.1, top_k=10):
+def get_statistics(model, x_test, y_test, model_test, num_analyze=500, threshold=0.1, top_k=10):
 
     # get positive label sequences and sequence model
     pos_index = np.where(y_test[:,0] == 1)[0]   
@@ -40,4 +40,9 @@ def get_saliency_scores(model, x_test, y_test, model_test, num_analyze=500, thre
     sal_signal, sal_noise_max, sal_noise_mean, sal_noise_topk = evaluate.signal_noise_stats(sal_scores, X_model, top_k, threshold)
     snr = evaluate.calculate_snr(sal_signal, sal_noise_topk)
     
-    return saliency_roc, saliency_pr, snr
+    results = model.evaluate(x_test, y_test, verbose=2)
+    model_loss = results[0]
+    model_auroc = results[1]
+    model_aupr = results[2]
+    
+    return saliency_roc, saliency_pr, snr, model_aupr, model_auroc

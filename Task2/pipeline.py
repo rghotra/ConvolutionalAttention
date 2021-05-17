@@ -49,6 +49,6 @@ def execute_pipeline(baseline, category, variant, trial, model, epochs=50):
         
         
     # Obtain saliency scores
-    sal_roc, sal_pr, snr = utils.get_saliency_scores(model, x_test, y_test, model_test)
-    stats = np.array([sal_roc, sal_pr, snr])
+    sal_roc, sal_pr, snr, model_aupr, model_auroc = utils.get_statistics(model, x_test, y_test, model_test)
+    stats = np.array([sal_roc, sal_pr, snr, model_aupr, model_roc])
     np.save(stats_dir, stats, allow_pickle=True)

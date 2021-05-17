@@ -4,7 +4,7 @@ from tensorflow.keras import layers, Model, Input
 from tfomics import moana, evaluate
 from tfomics.layers import MultiHeadAttention
 
-def CNN_ATT(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='relu', pool_size=4, heads=8, key_size=64, dense_units=512, num_out=12):
+def CNN_ATT(in_shape=(200, 4), num_filters=24, batch_norm=True, activation='relu', pool_size=4, heads=8, key_size=64, dense_units=128, num_out=12):
 
     inputs = Input(shape=in_shape)
     nn = layers.Conv1D(filters=num_filters, kernel_size=19, use_bias=False, padding='same')(inputs)
@@ -28,7 +28,7 @@ def CNN_ATT(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='relu
 
     return Model(inputs=inputs, outputs=outputs)
 
-def CNN_LSTM(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='relu', pool_size=4, lstm_units=128, dense_units=512, num_out=12):
+def CNN_LSTM(in_shape=(200, 4), num_filters=24, batch_norm=True, activation='relu', pool_size=4, lstm_units=64, dense_units=128, num_out=12):
     
     inputs = Input(shape=in_shape)
     nn = layers.Conv1D(filters=num_filters, kernel_size=19, use_bias=False, padding='same')(inputs)
@@ -54,7 +54,7 @@ def CNN_LSTM(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='rel
 
     return Model(inputs=inputs, outputs=outputs)
 
-def CNN_LSTM_ATT(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='relu', pool_size=4, lstm_units=128, heads=8, key_size=64, dense_units=512, num_out=12):
+def CNN_LSTM_ATT(in_shape=(200, 4), num_filters=24, batch_norm=True, activation='relu', pool_size=4, lstm_units=64, heads=8, key_size=64, dense_units=128, num_out=12):
 
     inputs = Input(shape=in_shape)
     nn = layers.Conv1D(filters=num_filters, kernel_size=19, use_bias=False, padding='same')(inputs)
@@ -83,7 +83,7 @@ def CNN_LSTM_ATT(in_shape=(200, 4), num_filters=32, batch_norm=True, activation=
 
     return Model(inputs=inputs, outputs=outputs)
 
-def CNN_TRANS(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='relu', pool_size=4, num_layers=1, heads=8, key_size=64, dense_units=512, num_out=12):
+def CNN_TRANS(in_shape=(200, 4), num_filters=24, batch_norm=True, activation='relu', pool_size=4, num_layers=1, heads=8, key_size=64, dense_units=128, num_out=12):
     
     inputs = Input(shape=in_shape)
     nn = layers.Conv1D(filters=num_filters, kernel_size=19, use_bias=False, padding='same')(inputs)
@@ -119,7 +119,7 @@ def CNN_TRANS(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='re
 
     return Model(inputs=inputs, outputs=outputs)
 
-def CNN_LSTM_TRANS(in_shape=(200, 4), num_filters=32, batch_norm=True, activation='relu', pool_size=4, num_layers=1, heads=8, key_size=64, dense_units=512, num_out=12):
+def CNN_LSTM_TRANS(in_shape=(200, 4), num_filters=24, batch_norm=True, activation='relu', pool_size=4, num_layers=1, heads=8, key_size=64, dense_units=128, num_out=12):
     
     inputs = Input(shape=in_shape)
     nn = layers.Conv1D(filters=num_filters, kernel_size=19, use_bias=False, padding='same')(inputs)
